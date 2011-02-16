@@ -75,7 +75,7 @@ post '/collect_vote' do
 end
 
 post '/tally_vote' do
-  if c = Competitor.first(:code => params[:Digits])
+  if @competitor = Competitor.first(:code => params[:Digits])
     a = Authorization.first(:phone => params[:From])
     v = Vote.new()
     v.authorization = a
@@ -83,7 +83,6 @@ post '/tally_vote' do
     v.save
     a.used = true
     a.save
-    @name = c.name
     builder :confirm_vote
   else
     builder :collect_vote
@@ -91,5 +90,6 @@ post '/tally_vote' do
 end
 
 get %r{/nth_place/(\d+)} do |n|
-  puts Competitor.nth_place(n)
+  @competitor = Competitor.nth_place(n).name
+  haml :nth_place
 end
