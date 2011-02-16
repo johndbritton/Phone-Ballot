@@ -72,11 +72,14 @@ post '/collect_vote' do
 end
 
 post '/tally_vote' do
-  c = Competitor.get(:code => params[:Digits])
-  a = Authorization.get(:phone => params[:From])
-  v = Vote.new()
-  v.authorization = a
-  v.competitor = c
-  v.save
-  builder :confirm_vote
+  if c = Competitor.get(:code => params[:Digits])
+    a = Authorization.get(:phone => params[:From])
+    v = Vote.new()
+    v.authorization = a
+    v.competitor = c
+    v.save
+    builder :confirm_vote
+  else
+    builder :collect_vote
+  end
 end
