@@ -78,6 +78,8 @@ post '/tally_vote' do
     v.authorization = a
     v.competitor = c
     v.save
+    a.used = true
+    a.save
     builder :confirm_vote
   else
     builder :collect_vote
