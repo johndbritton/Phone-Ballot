@@ -1,5 +1,5 @@
 xml.Response do
-  xml.Dial(@winning_vote.number, :hangupOnStar => 'true')
+  xml.Dial(@winning_vote.authorization.phone, :hangupOnStar => 'true')
   xml.Gather(:numDigits => '1') do
     xml.Say('Hangup now to stop selecting winners.')
     xml.Say('Press 1 to select from the voters who picked the first place winner.')
