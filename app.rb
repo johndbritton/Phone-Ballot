@@ -50,7 +50,6 @@ post '/authorize_phone' do
   if a
     builder :collect_vote
   else
-    #ask for a pin
     builder :authorize_pin
   end
 end
@@ -62,7 +61,6 @@ post '/authorize_pin' do
     a.save
     builder :collect_vote
   else
-    #ask for pin
     builder :authorize_pin
   end
 end
