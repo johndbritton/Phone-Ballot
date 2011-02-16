@@ -100,7 +100,6 @@ post '/host' do
 end
 
 post '/winner' do
-  votes = Vote.all
   if params[:Digits] == 0
     votes = Vote.all
   elsif params[:Digits] == 9
@@ -112,6 +111,7 @@ post '/winner' do
     votes = Competitor.nth_place(params[:Digits]).votes
   else
     builder :host
+    return
   end 
 
   votes = votes.all(:eligible => true)
