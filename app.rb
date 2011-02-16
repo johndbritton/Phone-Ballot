@@ -72,8 +72,8 @@ post '/collect_vote' do
 end
 
 post '/tally_vote' do
-  if c = Competitor.get(:code => params[:Digits].to_i)
-    a = Authorization.get(:phone => params[:From])
+  if c = Competitor.first(:code => params[:Digits])
+    a = Authorization.first(:phone => params[:From])
     v = Vote.new()
     v.authorization = a
     v.competitor = c
