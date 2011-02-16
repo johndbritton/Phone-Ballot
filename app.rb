@@ -100,6 +100,7 @@ post '/host' do
 end
 
 post '/winner' do
+  votes = Vote.all
   if params[:Digits] == 0
     votes = Vote.all
   elsif params[:Digits] == 9
@@ -114,7 +115,7 @@ post '/winner' do
   end 
 
   votes = votes.all(:eligible => true)
-  @winning_vote = votes[2]
+  @winning_vote = votes[rand(votes.count)]
   @winning_vote.eligible = false
   @winning_vote.save
   
