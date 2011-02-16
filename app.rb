@@ -114,7 +114,7 @@ post '/winner' do
   end 
 
   votes = votes.all(:eligible => true)
-  @winning_vote = votes[rand(votes.count)]
+  @winning_vote = votes[2]
   @winning_vote.eligible = false
   @winning_vote.save
   
