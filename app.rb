@@ -80,7 +80,7 @@ post '/tally_vote' do
     a = Authorization.first(:phone => params[:From])
     v = Vote.new()
     v.authorization = a
-    v.competitor = c
+    v.competitor = @competitor
     v.save
     a.used = true
     a.save
