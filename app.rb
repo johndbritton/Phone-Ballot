@@ -89,3 +89,7 @@ post '/tally_vote' do
     builder :collect_vote
   end
 end
+
+get %r{/nth_place/(\d+)} do |n|
+  puts Competitor.nth_place(n)
+end
