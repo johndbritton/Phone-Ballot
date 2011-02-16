@@ -113,7 +113,7 @@ post '/winner' do
     builder :host
   end 
 
-  votes = votes.all(:eligible => true)
+  votes = votes.get(:eligible => true)
   @winning_vote = votes[rand(votes.count)]
   @winning_vote.eligible = false
   @winning_vote.save
