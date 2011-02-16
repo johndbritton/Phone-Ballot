@@ -62,7 +62,7 @@ end
 
 post '/authorize_pin' do
   a = Authorization.first(:pin => params[:Digits], :used => false)
-  if a
+  if a && params[:Digits]
     a.phone = params[:From]
     a.save
     builder :collect_vote
