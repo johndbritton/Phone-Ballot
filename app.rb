@@ -80,6 +80,7 @@ post '/tally_vote' do
     v.save
     a.used = true
     a.save
+    @name = c.name
     builder :confirm_vote
   else
     builder :collect_vote
