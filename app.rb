@@ -90,6 +90,6 @@ post '/tally_vote' do
 end
 
 get %r{/nth_place/(\d+)} do |n|
-  @competitor = Competitor.nth_place(n).name
+  @competitor = Competitor.nth_place(n)
   haml :nth_place
 end
