@@ -85,7 +85,7 @@ end
 
 post '/tally_vote' do
   if @competitor = Competitor.first(:code => params[:Digits])
-    a = Authorization.first(:phone => params[:From])
+    a = Authorization.first(:phone => params[:From], :used => false)
     v = Vote.new()
     v.authorization = a
     v.competitor = @competitor
