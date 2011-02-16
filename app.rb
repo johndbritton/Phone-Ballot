@@ -118,7 +118,7 @@ post '/winner' do
   @winning_vote.eligible = false
   @winning_vote.save
   
-  bulider :winner
+  builder :winner
 end
 
 get '/votes' do
