@@ -111,7 +111,7 @@ post '/winner' do
     votes = Competitor.nth_place(params[:Digits].to_i).votes
   end
 
-  unless votes.nil? then
+  unless votes.count < 1 then
     votes = votes.all(:eligible => true)
     @winning_vote = votes[rand(votes.count)]
     @winning_vote.eligible = false
