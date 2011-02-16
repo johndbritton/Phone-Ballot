@@ -19,12 +19,8 @@ class Competitor
   has n, :votes
   
   def self.nth_place(n)
-    competitors = Hash.new
-    all.each do |competitor|
-      competitors[competitor] = competitor.votes.count
-    end
-    competitors.sort {|a,b| -1*(a[1]<=>b[1]) }
-    return competitors[n-1]
+    ranked_competitors = all.sort {|a,b| -1*a.votes.count <=> b.votes.count}
+    return ranked_competitors[n-1]
   end
 end
 
