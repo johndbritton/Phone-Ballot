@@ -75,6 +75,14 @@ post '/collect_vote' do
   builder :collect_vote
 end
 
+post '/verify_vote' do
+  if @competitor = Competitor.first(:code => params[:Digits])
+    builder :verify_vote
+  else
+    builder :collect_vote
+  end
+end
+
 post '/tally_vote' do
   if @competitor = Competitor.first(:code => params[:Digits])
     a = Authorization.first(:phone => params[:From])
