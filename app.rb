@@ -39,8 +39,8 @@ post '/call' do
 end
 
 post '/authorize_phone' do
-  a = Authorization.first(:phone => params[:From])
-  unless a.used then
+  a = Authorization.first(:phone => params[:From], :used => false)
+  if a
     #you're all good, mark as used later
     builder :vote
   else
@@ -50,8 +50,8 @@ post '/authorize_phone' do
 end
 
 post '/authorize_pin' do
-  a = Authorization.first(:pin => params[:Digits])
-  unless a.used then
+  a = Authorization.first(:pin => params[:Digits], :used => false)
+  if a
     #you're all good, mark as used later
     builder :vote
   else
