@@ -1,7 +1,7 @@
 xml.Response do
   xml.Gather(:action => '/winner', :numDigits => '1') do
     xml.Say('Welcome to the contest host line, powered by Twilio.')
-    xml.Say('We are now going to connect you with the first winner. After you are connected, you can press star to disconnect.')
+    xml.Say('After you are connected, you can press star to disconnect.')
     xml.Say('We will then select another winner.')
     xml.Say('Press 1 to select from the voters who picked the first place winner.')
     xml.Say('Press 2 to select from the voters who picked the second place winner.')
