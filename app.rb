@@ -39,6 +39,7 @@ class Vote
   include DataMapper::Resource
   
   property :id, Serial
+  property :eligible, Boolean, :default =>true
   
   belongs_to :competitor
   belongs_to :authorization
@@ -92,4 +93,35 @@ end
 get %r{/nth_place/(\d+)} do |n|
   @competitor = Competitor.nth_place(n)
   haml :nth_place
+end
+
+post '/host' do
+  builder :host
+end
+
+post '/winner' do
+  if params[:Digits] == 0
+    votes = Vote.all
+  elsif params[:Digits] == 9
+    c1 = Competitor.nth_place(1)
+    c2 = Competitor.nth_place(2)
+    c3 = Competitor.nth_place(3)
+    votes = c1.votes + c2.votes + c3.votes
+  elsif params[:Digits]
+    votes = Competitor.nth_place(params[:Digits]).votes
+  else
+    builder :host
+  end 
+
+  votes.keep_if {|vote| vote.eligible}
+  @winning_vote = votes[rand(votes.count)]
+  @winning_vote.eligible = false
+  @winning_vote.save
+  
+  bulider :winner
+end
+
+get '/votes' do
+  @votes = Vote.all
+  haml :votes
 end
