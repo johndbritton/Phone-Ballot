@@ -15,6 +15,8 @@ class Competitor
   property :id, Serial
   property :name, String, :required => true
   property :code, Integer, :required => true
+  
+  has n, :votes
 end
 
 class Authorization
@@ -24,12 +26,17 @@ class Authorization
   property :phone, String
   property :pin, Integer
   property :used, Boolean, :default => false
+  
+  has 1 :vote
 end
 
 class Vote
   include DataMapper::Resource
   
   property :id, Serial
+  
+  belongs_to :competitor
+  belongs_to :authorization
 end
 
 DataMapper.auto_upgrade!
@@ -41,8 +48,7 @@ end
 post '/authorize_phone' do
   a = Authorization.first(:phone => params[:From], :used => false)
   if a
-    #you're all good, mark as used later
-    builder :vote
+    builder :collect_vote
   else
     #ask for a pin
     builder :authorize_pin
@@ -52,8 +58,9 @@ end
 post '/authorize_pin' do
   a = Authorization.first(:pin => params[:Digits], :used => false)
   if a
-    #you're all good, mark as used later
-    builder :vote
+    a.phone = params[:From]
+    a.save
+    builder :collect_vote
   else
     #ask for pin
     builder :authorize_pin
@@ -66,5 +73,10 @@ end
 
 post '/tally_vote' do
   c = Competitor.get(:code => params[:Digits])
+  a = Authorization.get(:phone => params[:From])
+  v = Vote.new()
+  v.authorization = a
+  v.competitor = c
+  v.save
   builder :confirm_vote
 end
