@@ -100,10 +100,9 @@ post '/host' do
 end
 
 post '/winner' do
-  if params[:Digits] == 0
+  if params[:Digits].to_i == 0
     votes = Vote.all
-    puts votes.count
-  elsif params[:Digits] == 9
+  elsif params[:Digits].to_i == 9
     c1 = Competitor.nth_place(1)
     c2 = Competitor.nth_place(2)
     c3 = Competitor.nth_place(3)
