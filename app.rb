@@ -20,7 +20,7 @@ class Competitor
   
   def self.nth_place(n)
     ranked_competitors = all.sort {|a,b| -1*a.votes.count <=> b.votes.count}
-    return ranked_competitors[n-1]
+    return ranked_competitors[n.to_i-1]
   end
 end
 
