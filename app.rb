@@ -27,7 +27,7 @@ class Authorization
   property :pin, Integer
   property :used, Boolean, :default => false
   
-  has 1 :vote
+  has 1, :vote
 end
 
 class Vote
