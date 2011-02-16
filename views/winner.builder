@@ -9,5 +9,5 @@ xml.Response do
     xml.Say('Press 0 to select from all voters.')
     xml.Pause()
   end
-  xml.Redirect('/winner')
+  xml.Redirect('/host')
 end

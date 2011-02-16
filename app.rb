@@ -20,7 +20,7 @@ class Competitor
   
   def self.nth_place(n)
     ranked_competitors = all.sort {|a,b| -1*a.votes.count <=> b.votes.count}
-    return ranked_competitors[n.to_i-1]
+    return ranked_competitors[n-1]
   end
 end
 
@@ -91,7 +91,7 @@ post '/tally_vote' do
 end
 
 get %r{/nth_place/(\d+)} do |n|
-  @competitor = Competitor.nth_place(n)
+  @competitor = Competitor.nth_place(n.to_i)
   haml :nth_place
 end
 
@@ -108,17 +108,18 @@ post '/winner' do
     c3 = Competitor.nth_place(3)
     votes = c1.votes + c2.votes + c3.votes
   elsif params[:Digits]
-    votes = Competitor.nth_place(params[:Digits]).votes
+    votes = Competitor.nth_place(params[:Digits].to_i).votes
+  end
+
+  unless votes.nil? then
+    votes = votes.all(:eligible => true)
+    @winning_vote = votes[rand(votes.count)]
+    @winning_vote.eligible = false
+    @winning_vote.save  
+    builder :winner
   else
     builder :host
-  end 
-
-  votes = votes.all(:eligible => true)
-  @winning_vote = votes[rand(votes.count)]
-  @winning_vote.eligible = false
-  @winning_vote.save
-  
-  builder :winner
+  end
 end
 
 get '/votes' do
